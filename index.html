@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>For Shathi ✨</title>
+    <title>For Anshika ✨</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Great+Vibes&display=swap');
 
         * {
             box-sizing: border-box;
@@ -19,24 +19,36 @@
             height: 100vh;
             overflow: hidden;
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #1a0033, #4a148c);
-            color: #fff;
+            background: radial-gradient(circle, #1a001a, #000000); /* Dark Romantic Theme */
+            color: #ffffff;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
+            /* Animated Boundary Line */
+            border: 8px solid;
+            animation: borderColors 5s infinite linear;
         }
 
-        /* Top Handle Style */
+        @keyframes borderColors {
+            0% { border-color: #ff0055; }
+            25% { border-color: #9c27b0; }
+            50% { border-color: #00e5ff; }
+            75% { border-color: #ffeb3b; }
+            100% { border-color: #ff0055; }
+        }
+
+        /* Top Handle Style - Now Clearly Visible */
         .top-handle {
             position: absolute;
-            top: 15px;
+            top: 25px;
             width: 100%;
             font-weight: 600;
-            color: rgba(0, 0, 0, 0.7); /* Dark text */
+            color: #ffffff; 
+            text-shadow: 0 0 10px rgba(255,255,255,0.8);
             z-index: 100;
-            font-size: 0.9rem;
-            letter-spacing: 1px;
+            font-size: 1rem;
+            letter-spacing: 2px;
         }
 
         .page {
@@ -59,9 +71,11 @@
         }
 
         h1 {
-            font-size: 2rem;
+            font-family: 'Great Vibes', cursive;
+            font-size: 3rem;
             margin-bottom: 15px;
-            color: #ffb7ce;
+            color: #fff;
+            text-shadow: 0 0 15px #ff69b4;
         }
 
         p {
@@ -69,15 +83,17 @@
             margin-bottom: 30px;
             line-height: 1.5;
             max-width: 85%;
+            color: #e0e0e0;
         }
 
         .gif-container {
             width: 220px;
             height: 220px;
             margin-bottom: 25px;
-            border-radius: 20px;
+            border-radius: 50%;
             overflow: hidden;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            border: 3px solid #fff;
+            box-shadow: 0 0 20px rgba(255,255,255,0.4);
         }
 
         .gif-container img {
@@ -87,20 +103,25 @@
         }
 
         .btn {
-            background: linear-gradient(45deg, #ff69b4, #9c27b0);
+            background: transparent;
             color: white;
-            border: none;
+            border: 2px solid #fff;
             padding: 12px 35px;
             font-size: 1rem;
-            border-radius: 25px;
+            border-radius: 30px;
             cursor: pointer;
             font-weight: 600;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-            position: relative;
+            transition: 0.3s;
             z-index: 20;
+            box-shadow: 0 0 10px rgba(255,255,255,0.2);
         }
 
-        /* Background & Balloon Styles */
+        .btn:active {
+            background: #fff;
+            color: #000;
+        }
+
+        /* Background Elements */
         #bg-container {
             position: absolute;
             inset: 0;
@@ -111,36 +132,30 @@
         .balloon {
             position: absolute;
             bottom: -150px;
-            width: 70px;
-            height: 85px;
+            width: 80px;
+            height: 100px;
             border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 12px;
+            font-size: 10px;
             font-weight: bold;
             color: white;
             animation: floatBalloon linear infinite;
-        }
-
-        .balloon::after {
-            content: "↓";
-            position: absolute;
-            bottom: -15px;
-            color: rgba(255,255,255,0.5);
+            box-shadow: inset -5px -5px 15px rgba(0,0,0,0.2);
         }
 
         @keyframes floatBalloon {
             0% { transform: translateY(0) rotate(0deg); opacity: 0; }
-            10% { opacity: 0.8; }
-            90% { opacity: 0.8; }
-            100% { transform: translateY(-120vh) rotate(15deg); opacity: 0; }
+            10% { opacity: 0.7; }
+            90% { opacity: 0.7; }
+            100% { transform: translateY(-120vh) rotate(20deg); opacity: 0; }
         }
     </style>
 </head>
 <body>
 
-    <div class="top-handle">follow - @smss1708 🌺</div>
+    <div class="top-handle">FOLLOW - @smss1708 🌺</div>
 
     <audio id="bg-music" loop>
         <source src="tere-liye.mp3" type="audio/mpeg">
@@ -149,8 +164,8 @@
     <div id="bg-container"></div>
 
     <div class="page active" id="page-1">
-        <h1>Hi Shathi! ✨</h1>
-        <p>I am sivasingh🥀 and I made a little website for you...</p>
+        <h1>Hi Anshika! ✨</h1>
+        <p> I made a little website for your smile 😁...</p>
         <button class="btn" onclick="nextPage(1)">Click Here</button>
     </div>
 
@@ -175,7 +190,7 @@
             <img src="flower3.gif" alt="Flower 3">
         </div>
         <h1>Keep Smiling! 😊</h1>
-        <p>Glad we became friends. Have a great day !</p>
+        <p>Glad we became friends, Anshika. Have a great night!</p>
     </div>
 
     <script>
@@ -183,7 +198,7 @@
 
         function nextPage(current) {
             if (current === 1) {
-                bgMusic.play().catch(() => console.log("Music interaction required"));
+                bgMusic.play().catch(() => console.log("Music needs interaction"));
             }
             
             document.getElementById(`page-${current}`).classList.remove('active');
@@ -195,31 +210,31 @@
 
         function createElements() {
             const container = document.getElementById('bg-container');
-            const colors = ['#ff69b4', '#ffeb3b', '#03a9f4', '#8bc34a', '#ff5722'];
+            const colors = ['#ff4d6d', '#ff758f', '#c9184a', '#800f2f', '#ffb3c1'];
             
-            // Create Balloons with "sathi" text
-            for (let i = 0; i < 8; i++) {
+            // Balloons with "Anshika" text
+            for (let i = 0; i < 10; i++) {
                 let b = document.createElement('div');
                 b.className = 'balloon';
-                b.innerText = 'sathi';
+                b.innerText = 'Anshika';
                 b.style.left = Math.random() * 90 + 'vw';
                 b.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                b.style.animationDuration = (Math.random() * 5 + 7) + 's';
-                b.style.animationDelay = Math.random() * 8 + 's';
+                b.style.animationDuration = (Math.random() * 5 + 8) + 's';
+                b.style.animationDelay = Math.random() * 10 + 's';
                 container.appendChild(b);
             }
 
-            // Keep some sparkles for magic
-            const sparkles = ['✨', '⭐'];
-            for (let i = 0; i < 6; i++) {
-                let s = document.createElement('div');
-                s.style.position = 'absolute';
-                s.style.bottom = '-50px';
-                s.style.left = Math.random() * 100 + 'vw';
-                s.innerText = sparkles[Math.floor(Math.random() * sparkles.length)];
-                s.style.animation = `floatBalloon ${Math.random() * 3 + 5}s linear infinite`;
-                s.style.opacity = '0.4';
-                container.appendChild(s);
+            // Floating hearts
+            for (let i = 0; i < 10; i++) {
+                let h = document.createElement('div');
+                h.style.position = 'absolute';
+                h.style.bottom = '-50px';
+                h.style.left = Math.random() * 100 + 'vw';
+                h.innerHTML = '❤️';
+                h.style.fontSize = (Math.random() * 10 + 15) + 'px';
+                h.style.animation = `floatBalloon ${Math.random() * 3 + 6}s linear infinite`;
+                h.style.opacity = '0.5';
+                container.appendChild(h);
             }
         }
         
