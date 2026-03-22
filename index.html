@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>I am really sorry 😥❤️</title>
+    <title>I am really sorry😥😥 </title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Dancing+Script:wght@700&family=Great+Vibes&display=swap" rel="stylesheet">
     <style>
         /* RESET & BASE */
@@ -91,7 +91,7 @@
             height: 20px;
             width: 20px;
             transform: rotate(-45deg);
-            animation: float 5s linear infinite;
+            animation: float 5s linear forwards;
             opacity: 0.8;
         }
 
@@ -109,7 +109,7 @@
         @keyframes float {
             0% { transform: translateY(0) rotate(-45deg) scale(0.5); opacity: 0; }
             20% { opacity: 0.8; }
-            100% { transform: translateY(-100vh) rotate(-45deg) scale(1.2); opacity: 0; }
+            100% { transform: translateY(-110vh) rotate(-45deg) scale(1.2); opacity: 0; }
         }
 
         /* SECTIONS */
@@ -126,15 +126,15 @@
             padding: 25px;
             opacity: 0;
             visibility: hidden;
-            transition: all 0.6s ease-in-out;
-            transform: translateY(20px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: scale(0.9) translateY(30px);
             z-index: 10;
         }
 
         .section.active {
             opacity: 1;
             visibility: visible;
-            transform: translateY(0);
+            transform: scale(1) translateY(0);
         }
 
         /* GLASS CARDS */
@@ -156,6 +156,7 @@
             overflow: hidden;
             margin-bottom: 20px;
             box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            background: rgba(255,255,255,0.05);
         }
 
         .gif-container img {
@@ -192,30 +193,38 @@
             cursor: pointer;
             box-shadow: 0 4px 15px rgba(255, 71, 87, 0.3);
             transition: 0.3s;
+            outline: none;
         }
 
         .btn:hover { transform: scale(1.05); box-shadow: 0 6px 20px rgba(255, 71, 87, 0.5); }
+        .btn:active { transform: scale(0.95); }
 
         .btn-outline {
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.2);
             width: 100%;
             margin-bottom: 12px;
-            padding: 10px;
+            padding: 12px;
             border-radius: 15px;
             color: #fab1a0;
+            font-family: inherit;
+            cursor: pointer;
+            transition: 0.3s;
         }
+        
+        .btn-outline:hover { background: rgba(255, 255, 255, 0.1); border-color: #ff7675; }
 
         /* MODAL */
         .modal-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.85);
+            background: rgba(0, 0, 0, 0.9);
             z-index: 1000;
             display: none;
             justify-content: center;
             align-items: center;
             padding: 20px;
+            backdrop-filter: blur(5px);
         }
 
         .modal-content {
@@ -225,6 +234,12 @@
             text-align: center;
             border: 1px solid #ff7675;
             max-width: 350px;
+            transform: scale(0.8);
+            animation: modalIn 0.3s forwards;
+        }
+
+        @keyframes modalIn {
+            to { transform: scale(1); }
         }
 
         /* MUSIC CONTROL */
@@ -232,17 +247,23 @@
             position: absolute;
             bottom: 25px;
             right: 25px;
-            width: 45px;
-            height: 45px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.15);
             display: flex;
             justify-content: center;
             align-items: center;
             z-index: 200;
             cursor: pointer;
             border: 1px solid rgba(255, 255, 255, 0.3);
+            font-size: 1.2rem;
+            transition: 0.3s;
+        }
+
+        .playing {
             animation: pulse 2s infinite;
+            background: rgba(255, 71, 87, 0.3);
         }
 
         @keyframes pulse {
@@ -338,7 +359,7 @@
                 <h2>I Promise...</h2>
                 <p>I promise to listen more, understand better, and never let you feel alone again.</p>
                 <p style="font-family: 'Dancing Script'; font-size: 1.5rem; color: #ff7675;">Forever Yours.</p>
-                <small style="opacity: 0.5;">Made with Love by Ansh</small>
+                <small style="opacity: 0.6; display: block; margin-top: 15px;">Made with Love by <b>Sivasingh</b></small>
             </div>
         </div>
 
@@ -358,22 +379,36 @@
         const musicBtn = document.getElementById('musicBtn');
         let isPlaying = false;
 
+        // Music toggle improved with visual feedback
         function toggleMusic() {
-            if (isPlaying) { music.pause(); musicBtn.style.animationPlayState = 'paused'; } 
-            else { music.play(); musicBtn.style.animationPlayState = 'running'; }
+            if (isPlaying) {
+                music.pause();
+                musicBtn.classList.remove('playing');
+            } else {
+                music.play().catch(e => console.log("Audio play deferred"));
+                musicBtn.classList.add('playing');
+            }
             isPlaying = !isPlaying;
         }
 
+        // Section transition improved
         function nextSection(num) {
+            // Auto-play music on first interaction if not playing
             if (!isPlaying) toggleMusic(); 
-            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-            document.getElementById('section' + num).classList.add('active');
+            
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(s => s.classList.remove('active'));
+            
+            const target = document.getElementById('section' + num);
+            if(target) {
+                target.classList.add('active');
+            }
         }
 
         const messages = {
-            regret: { title: "My Regret 💔", text: "I regret hurting you Cutie… I never meant to cause pain. Seeing you upset is the last thing I ever wanted." },
-            care: { title: "My Care ✨", text: "You matter to me Cutie, more than words can explain. Your smile is my favorite thing in the world." },
-            promise: { title: "My Promise 🤝", text: "I promise to be more patient and never let you walk alone through any pain again. I'm here, always." }
+            regret: { title: "My Regret 💔", text: "I regret hurting you Cutie… I never meant to cause pain. Seeing you upset is the last thing I, Sivasingh, ever wanted." },
+            care: { title: "My Care ✨", text: "You matter to me Cutie, more than words can explain. Your smile is my favorite thing in the world, and I'll do anything to keep it." },
+            promise: { title: "My Promise 🤝", text: "I, Sivasingh, promise to be more patient and never let you walk alone through any pain again. I'm here for you, always." }
         };
 
         function openModal(type) {
@@ -382,19 +417,43 @@
             document.getElementById('messageModal').style.display = 'flex';
         }
 
-        function closeModal() { document.getElementById('messageModal').style.display = 'none'; }
+        function closeModal() { 
+            document.getElementById('messageModal').style.display = 'none'; 
+        }
 
+        // Optimized Heart creation
         function createHeart() {
+            const container = document.getElementById('heartsContainer');
+            if(!container) return;
+            
             const heart = document.createElement('div');
             heart.classList.add('heart');
-            heart.style.left = Math.random() * 100 + "vw";
-            heart.style.animationDuration = (Math.random() * 3 + 2) + "s";
-            const size = Math.random() * 15 + 10 + "px";
-            heart.style.width = size; heart.style.height = size;
-            document.getElementById('heartsContainer').appendChild(heart);
-            setTimeout(() => heart.remove(), 5000);
+            
+            const startX = Math.random() * 100;
+            heart.style.left = startX + "vw";
+            
+            const duration = (Math.random() * 3 + 3);
+            heart.style.animationDuration = duration + "s";
+            
+            const size = Math.random() * 12 + 10 + "px";
+            heart.style.width = size; 
+            heart.style.height = size;
+            
+            container.appendChild(heart);
+            
+            // Clean up memory
+            setTimeout(() => {
+                heart.remove();
+            }, duration * 1000);
         }
-        setInterval(createHeart, 300);
+
+        // Faster intervals for better look
+        setInterval(createHeart, 400);
+
+        // Handle Escape key for modal
+        window.addEventListener('keydown', (e) => {
+            if(e.key === "Escape") closeModal();
+        });
     </script>
 </body>
 </html>
