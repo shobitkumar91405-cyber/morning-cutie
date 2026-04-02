@@ -3,248 +3,367 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For My Cutee 💖</title>
+    <title>For My Cutee ❤️</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Poppins:wght@300;400;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Dancing+Script:wght@700&display=swap');
+
+        :root {
+            --pink: #ff85a2;
+            --soft-pink: #ffb6c1;
+            --white: #ffffff;
+            --glow: 0 0 10px rgba(255, 133, 162, 0.6);
+        }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        :root {
-            --primary-pink: #ff69b4;
-            --deep-pink: #ff1493;
-            --soft-glow: rgba(255, 20, 147, 0.3);
-            --white-glass: rgba(255, 255, 255, 0.85);
-        }
-
         body {
             font-family: 'Poppins', sans-serif;
-            background: #fffafa; /* Clean Soft White */
+            background: linear-gradient(135deg, #ffffff 0%, #ffe4e8 100%);
             height: 100vh;
             overflow: hidden;
+            color: #444;
             display: flex;
-            align-items: center;
             justify-content: center;
+            align-items: center;
         }
 
-        /* Floating Hearts Animation */
+        /* Floating Hearts Background */
         .bg-hearts {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none; z-index: -1;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 0;
         }
 
-        .heart-particle {
+        .heart-float {
             position: absolute;
-            animation: move linear infinite;
-            color: var(--primary-pink);
+            color: var(--soft-pink);
             opacity: 0.6;
+            animation: floatUp 6s linear infinite;
         }
 
-        @keyframes move {
+        @keyframes floatUp {
             0% { transform: translateY(110vh) scale(0); opacity: 0; }
-            50% { opacity: 0.8; }
+            50% { opacity: 0.6; }
             100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
         }
 
-        /* Insta Header */
-        .insta-header {
-            position: fixed; top: 15px; left: 50%;
-            transform: translateX(-50%);
-            z-index: 1000;
-            background: var(--white-glass);
-            padding: 8px 20px;
-            border-radius: 50px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            border: 1px solid var(--primary-pink);
-            font-size: 14px;
-            font-weight: 600;
+        /* Music Control */
+        .music-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1001;
+            background: white;
+            padding: 10px;
+            border-radius: 50%;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            cursor: pointer;
         }
 
-        .insta-header a { color: var(--deep-pink); text-decoration: none; }
-
-        /* Card Container */
-        .container {
-            width: 90%; max-width: 450px;
-            min-height: 500px;
-            background: var(--white-glass);
-            backdrop-filter: blur(15px);
-            border-radius: 30px;
-            padding: 30px;
+        /* Top Bar */
+        .top-bar {
+            position: fixed;
+            top: 0; width: 100%;
+            padding: 15px;
             text-align: center;
-            box-shadow: 0 20px 40px rgba(255, 105, 180, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            display: none;
-            flex-direction: column;
-            justify-content: center;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .top-bar a {
+            color: var(--pink);
+            text-decoration: none;
+            font-weight: 600;
+            text-shadow: var(--glow);
+        }
+
+        /* Container & Pages */
+        .container {
+            width: 90%;
+            max-width: 400px;
+            height: 80vh;
             position: relative;
             z-index: 10;
         }
 
-        .container.active { display: flex; animation: fadeIn 0.8s ease; }
+        .page {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        .active { display: flex; }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.9) translateY(20px); }
-            to { opacity: 1; transform: scale(1) translateY(0); }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Elements Styling */
-        .gif-box img { width: 180px; border-radius: 20px; margin-bottom: 20px; }
-
-        .glowing-text {
+        h1, h2 {
             font-family: 'Dancing Script', cursive;
-            font-size: 32px;
-            color: var(--deep-pink);
-            text-shadow: 0 0 10px var(--soft-glow);
-            margin: 20px 0;
-            line-height: 1.4;
+            color: var(--pink);
+            margin-bottom: 20px;
+            text-shadow: var(--glow);
         }
 
-        .msg-text { font-size: 17px; color: #444; margin-bottom: 25px; }
+        .message {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            color: #555;
+        }
 
-        .btn-continue {
-            background: linear-gradient(45deg, var(--deep-pink), var(--primary-pink));
-            color: white; border: none; padding: 12px 40px;
-            border-radius: 50px; cursor: pointer;
-            font-size: 16px; font-weight: 600;
+        .glow-text {
+            color: var(--pink);
+            text-shadow: 0 0 8px rgba(255, 133, 162, 0.4);
+        }
+
+        /* Buttons */
+        .btn {
+            background: var(--pink);
+            color: white;
+            border: none;
+            padding: 12px 35px;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
             transition: 0.3s;
-            box-shadow: 0 5px 15px rgba(255, 20, 147, 0.3);
+            box-shadow: 0 5px 15px rgba(255, 133, 162, 0.4);
         }
 
-        .btn-continue:hover { transform: scale(1.05); box-shadow: 0 8px 20px rgba(255, 20, 147, 0.4); }
+        .btn:hover { transform: scale(1.05); background: #ff6b8d; }
 
-        /* Shayari Specific */
-        .shayari-line { opacity: 0; margin: 10px 0; transition: 1s; }
-        .line-show { opacity: 1; transform: translateY(-5px); }
-
-        /* Audio Button */
-        .music-btn {
-            position: fixed; bottom: 20px; right: 20px;
-            background: white; border-radius: 50%; padding: 12px;
-            cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        /* Shayari Box */
+        .shayari-container {
+            background: white;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            max-width: 320px;
         }
+
+        .shayari-line {
+            display: block;
+            margin: 10px 0;
+            opacity: 0;
+            transform: translateX(-10px);
+            transition: 0.5s;
+            font-size: 0.95rem;
+            font-style: italic;
+        }
+
+        .shayari-line.visible { opacity: 1; transform: translateX(0); }
+
+        /* Gauge */
+        .gauge-wrap { margin: 20px 0; position: relative; }
+        .meter {
+            width: 150px; height: 150px;
+            border-radius: 50%;
+            border: 8px solid #f0f0f0;
+            border-top: 8px solid var(--pink);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--pink);
+            animation: spin 2s infinite linear;
+        }
+
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        /* Final Buttons */
+        .choice-btns { display: flex; gap: 20px; margin-top: 30px; position: relative; width: 100%; justify-content: center; }
+        #noBtn { position: absolute; }
     </style>
 </head>
 <body>
 
-    <div class="bg-hearts" id="hearts"></div>
+    <div class="bg-hearts" id="hearts-bg"></div>
 
-    <div class="insta-header">
-        Follow on Insta - <a href="https://instagram.com/smss1708">@smss1708</a>
+    <div class="top-bar">
+        <a href="https://instagram.com/smss1708" target="_blank">Follow on Insta - @smss1708</a>
+    </div>
+
+    <div class="music-control" onclick="toggleMusic()">
+        <span id="music-icon">🎵</span>
     </div>
 
     <audio id="bgMusic" loop>
         <source src="tere-liye.mp3" type="audio/mpeg">
     </audio>
 
-    <div class="container active" id="p1">
-        <div class="gif-box"><img src="gif1.gif" alt="Cute GIF"></div>
-        <h1 class="glowing-text">Hii Cutie... ✨</h1>
-        <p class="msg-text">I have something really special to say to you. Dil se sunna... ❤️</p>
-        <button class="btn-continue" onclick="nextPage(1, 2)">Continue</button>
-    </div>
-
-    <div class="container" id="p2">
-        <h1 class="glowing-text">Pata Hai?</h1>
-        <p class="msg-text">Jab tum hasti ho na, toh poori duniya aur bhi khoobsurat lagne lagti hai. 😊</p>
-        <button class="btn-continue" onclick="nextPage(2, 3)">Aage Suno...</button>
-    </div>
-
-    <div class="container" id="p3">
-        <h1 class="glowing-text">Tumhari Dosti ✨</h1>
-        <p class="msg-text">Tumhari dosti mere liye sabse badi nemat hai, par ab dil kuch aur keh raha hai...</p>
-        <button class="btn-continue" onclick="nextPage(3, 4)">Kya? ✨</button>
-    </div>
-
-    <div class="container" id="p4">
-        <h1 class="glowing-text">Every Moment... 💖</h1>
-        <p class="msg-text">Har wo pal jo maine tumhare saath bitaya hai, wo mere dil ke bohot kareeb hai.</p>
-        <button class="btn-continue" onclick="nextPage(4, 5)">Next ➡️</button>
-    </div>
-
-    <div class="container" id="p5">
-        <h1 class="glowing-text">I Really Like You!</h1>
-        <p class="msg-text">Haan, tum thodi ziddi ho, thodi pagli ho... par tum jaisi bhi ho, meri favourite ho. 😍</p>
-        <button class="btn-continue" onclick="nextPage(5, 6)">Pakka? 🌹</button>
-    </div>
-
-    <div class="container" id="p6">
-        <h2 class="glowing-text" style="font-size: 26px;">Sirf Tumhare Liye...</h2>
-        <div id="shayari-box" class="glowing-text" style="font-size: 20px;">
-            <p class="shayari-line">Tum bologi dhimi awaaz me 🌹</p>
-            <p class="shayari-line">Fir bhi baat pakad lunga 💕</p>
-            <p class="shayari-line">Gale nahi lagaunga tumko 💖</p>
-            <p class="shayari-line">Bas haath pakad lunga ✨</p>
+    <div class="container">
+        <div class="page active" id="p1">
+            <img src="gif1.gif" alt="Cute GIF" style="width: 200px; border-radius: 20px; margin-bottom: 20px;">
+            <h1 class="typing">Hii Cutee 💖</h1>
+            <p class="message">I want to say something very special to you...</p>
+            <button class="btn" onclick="nextPage(2)">Continue ❤️</button>
         </div>
-        <button class="btn-continue" id="shayariBtn" style="display:none;" onclick="nextPage(6, 7)">Pyari hai na? ❤️</button>
-    </div>
 
-    <div class="container" id="p7">
-        <h1 class="glowing-text">Waada Raha... 🤝</h1>
-        <p class="msg-text">Main hamesha tumhara saath dunga, har mushkil me aur har khushi me.</p>
-        <button class="btn-continue" onclick="nextPage(7, 8)">Promise? 💍</button>
-    </div>
+        <div class="page" id="p2">
+            <h1>Kab se kuch kehna tha...</h1>
+            <button class="btn" onclick="nextPage(3)">Continue ❤️</button>
+        </div>
 
-    <div class="container" id="p8">
-        <h1 class="glowing-text">Ek Nayi Shuruat?</h1>
-        <p class="msg-text">Kya hum is dosti ko ek pyaara sa naam de sakte hain? ✨</p>
-        <button class="btn-continue" onclick="nextPage(8, 9)">Bolo... 🤗</button>
-    </div>
+        <div class="page" id="p3">
+            <h1>Par shayad himmat nahi ho pa rahi thi...</h1>
+            <button class="btn" onclick="nextPage(4)">Continue ❤️</button>
+        </div>
 
-    <div class="container" id="p9">
-        <h1 class="glowing-text">Be Mine? 💖</h1>
-        <p class="msg-text">I don't just want to be your friend, I want to be the reason behind your smile every day.</p>
-        <button class="btn-continue" onclick="nextPage(9, 10)">Last One ✨</button>
-    </div>
+        <div class="page" id="p4">
+            <h1 class="glow-text">Tum sabse alag ho... ✨</h1>
+            <button class="btn" onclick="nextPage(5)">Continue ❤️</button>
+        </div>
 
-    <div class="container" id="p10">
-        <div class="gif-box"><img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueW5qZzR3eG5qZzR3eG5qZzR3eG5qZzR3eG5qZzR3JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/c76IJLufpNUMo/giphy.gif" alt="Love"></div>
-        <h1 class="glowing-text">I Love You! ❤️</h1>
-        <p class="msg-text">Will you walk with me forever? 💍✨</p>
-        <button class="btn-continue" onclick="alert('Yayyy! 💖 She said Yes!')">YES! ❤️</button>
+        <div class="page" id="p5">
+            <h1 class="glow-text">Bahut zyada special ho... 🌸</h1>
+            <button class="btn" onclick="nextPage(6)">Continue ❤️</button>
+        </div>
+
+        <div class="page" id="p6">
+            <h1>Aur shayad...</h1>
+            <button class="btn" onclick="nextPage(7)">Continue ❤️</button>
+        </div>
+
+        <div class="page" id="p7">
+            <h1 class="glow-text">Mujhe tum pasand ho 💖</h1>
+            <button class="btn" onclick="nextPage(8)">Continue ❤️</button>
+        </div>
+
+        <div class="page" id="p8">
+            <h2 class="glow-text">Bahut zyada... 🥀</h2>
+            <button class="btn" onclick="nextPage(9)">Continue ❤️</button>
+        </div>
+
+        <div class="page" id="p9">
+            <div class="shayari-container">
+                <span class="shayari-line">Tum bologi dhimi aavaz me</span>
+                <span class="shayari-line">fir bhi baat pakad lunga</span>
+                <span class="shayari-line">gale nahi lagaunga tumko</span>
+                <span class="shayari-line">bas haath pakad lunga...</span>
+                <br>
+                <span class="shayari-line">aur is thodi si mohabbat ki aag me</span>
+                <span class="shayari-line">zindagi bhar jalna hai</span>
+                <span class="shayari-line">hotel me nahi jana mujhko</span>
+                <span class="shayari-line">sadak pe saath chalna hai...</span>
+                <br>
+                <span class="shayari-line">fir bhi is duniya se nikal ke</span>
+                <span class="shayari-line">mujhme kho sakti ho kya?</span>
+                <span class="shayari-line">jyada ki chah nahi mujhko</span>
+                <span class="shayari-line">thodi si meri ho sakti ho kya 💯</span>
+            </div>
+            <button class="btn" style="margin-top: 20px;" onclick="nextPage(10)">Continue ❤️</button>
+        </div>
+
+        <div class="page" id="p10">
+            <h1 id="meterTitle">Calculating love... 💖</h1>
+            <div class="gauge-wrap">
+                <div class="meter" id="loveMeter">0%</div>
+            </div>
+            <div id="meterResult" style="display:none;">
+                <h2 class="glow-text">100% Perfect Match 💞</h2>
+                <p>Our hearts beat as one</p>
+                <div style="font-size: 50px; margin-top: 10px;">🤗</div>
+            </div>
+            <button class="btn" id="meterBtn" onclick="runMeter()" style="margin-top: 20px;">Check Compatibility</button>
+        </div>
+
+        <div class="page" id="p11">
+            <h1 class="glow-text" style="font-size: 2.5rem;">Will you be mine? 💖</h1>
+            <div class="choice-btns">
+                <button class="btn" style="padding: 15px 50px; font-size: 1.2rem;" onclick="alert('Yay! I love you! ❤️')">YES ❤️</button>
+                <button class="btn" id="noBtn" onmouseover="moveNo()" style="background: #ccc; box-shadow: none;">NO 💔</button>
+            </div>
+        </div>
     </div>
 
     <script>
-        // Start Music on First Click
-        document.body.addEventListener('click', () => {
-            document.getElementById('bgMusic').play();
-        }, { once: true });
-
         // Page Navigation
-        function nextPage(current, next) {
-            document.getElementById('p' + current).classList.remove('active');
-            const nextP = document.getElementById('p' + next);
-            nextP.classList.add('active');
-
-            // Trigger Shayari Animation on Page 6
-            if(next === 6) {
-                animateShayari();
+        function nextPage(n) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById('p' + n).classList.add('active');
+            
+            if (n === 9) showShayari();
+            if (document.getElementById('bgMusic').paused) {
+                document.getElementById('bgMusic').play().catch(e => console.log("Music needs interaction"));
             }
         }
 
-        // Shayari Line-by-Line Effect
-        async function animateShayari() {
-            const lines = document.querySelectorAll('.shayari-line');
-            for(let i=0; i<lines.length; i++) {
-                await new Promise(r => setTimeout(r, 1500));
-                lines[i].classList.add('line-show');
+        // Music Toggle
+        function toggleMusic() {
+            const music = document.getElementById('bgMusic');
+            const icon = document.getElementById('music-icon');
+            if (music.paused) {
+                music.play();
+                icon.innerHTML = "⏸️";
+            } else {
+                music.pause();
+                icon.innerHTML = "🎵";
             }
-            setTimeout(() => {
-                document.getElementById('shayariBtn').style.display = 'inline-block';
-            }, 1000);
         }
 
-        // Floating Hearts Background
-        const heartContainer = document.getElementById('hearts');
+        // Floating Hearts
         function createHeart() {
             const heart = document.createElement('div');
-            heart.classList.add('heart-particle');
+            heart.classList.add('heart-float');
             heart.innerHTML = '❤️';
             heart.style.left = Math.random() * 100 + 'vw';
             heart.style.fontSize = Math.random() * 20 + 10 + 'px';
-            heart.style.animationDuration = Math.random() * 3 + 4 + 's';
-            heartContainer.appendChild(heart);
+            heart.style.animationDuration = Math.random() * 3 + 3 + 's';
+            document.getElementById('hearts-bg').appendChild(heart);
             setTimeout(() => heart.remove(), 6000);
         }
         setInterval(createHeart, 300);
+
+        // Shayari Animation
+        function showShayari() {
+            const lines = document.querySelectorAll('.shayari-line');
+            lines.forEach((line, i) => {
+                setTimeout(() => {
+                    line.classList.add('visible');
+                }, i * 1500);
+            });
+        }
+
+        // Love Meter Logic
+        function runMeter() {
+            let count = 0;
+            const meter = document.getElementById('loveMeter');
+            const btn = document.getElementById('meterBtn');
+            btn.style.display = 'none';
+            
+            const interval = setInterval(() => {
+                count += Math.floor(Math.random() * 5) + 1;
+                if (count >= 100) {
+                    count = 100;
+                    clearInterval(interval);
+                    document.getElementById('meterTitle').style.display = 'none';
+                    document.getElementById('meterResult').style.display = 'block';
+                    meter.style.animation = 'none';
+                    setTimeout(() => nextPage(11), 3000);
+                }
+                meter.innerText = count + '%';
+            }, 50);
+        }
+
+        // Run Away No Button
+        function moveNo() {
+            const btn = document.getElementById('noBtn');
+            const x = Math.random() * (window.innerWidth - 100) - window.innerWidth/2;
+            const y = Math.random() * (window.innerHeight - 50) - window.innerHeight/2;
+            btn.style.transform = `translate(${x}px, ${y}px)`;
+        }
     </script>
 </body>
 </html>
